@@ -53,7 +53,7 @@ print(EncryptedPass)
 
 window = Tk()
 window.title('Password Generator')
-window.geometry('500x300')
+window.geometry('400x250')
 
 SK_label = Label(text='Secret Key: ')
 SK_label.grid(column = 0, row = 0)
@@ -62,20 +62,30 @@ skeyEntry.grid(column = 1, row = 0)
 
 Serv_Label = Label(text='Web Service: ')
 Serv_Label.grid(column = 0, row=1)
+servEntry = Entry(window, width=10)
+servEntry.grid(column = 1, row =1)
+
+GenPassLabel = Label(text='General Password: ')
+GenPassLabel.grid(column = 0, row = 2)
+gpEntry = Entry(window, width=10)
+gpEntry.grid(column = 1, row = 2)
 
 
 def clicked():
     SECRET_KEY = skeyEntry.get().encode('utf-8')
+    service = servEntry.get().encode('utf-8')
+    pswd = gpEntry.get().encode('utf-8')
+    EncryptedPass = password(pswd, service)
 
-    messagebox.showinfo('Output', SECRET_KEY)
+    messagebox.showinfo('Output', EncryptedPass)
 
 
 btn = Button(window, text='Run Program', command=clicked)
-btn.grid(column=2, row=2)
+btn.grid(column=1, row=3)
 
 window.mainloop()
 
-
+"""
 print("This is your password generator")
 print("Please enter your secret key: ")
 SECRET_KEY = input().encode("utf-8")
@@ -87,5 +97,4 @@ EncryptedPass = password(pswd, service)
 print("Generated password is:")
 print(EncryptedPass)
 
-
-
+"""
