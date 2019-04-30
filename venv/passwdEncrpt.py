@@ -1,17 +1,20 @@
 #runs on Python 3.6
 from hashlib import sha256
-import os
 from passlib.hash import pbkdf2_sha256
 import tkinter
 from tkinter import *
 from tkinter import messagebox
-
-
+from py_dotenv import read_dotenv
+import os
 
 #define valid password entries
 ALPHABET = ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_')
 
-SECRET_KEY = 't0ps3cr3t'.encode('utf-8')
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+read_dotenv(dotenv_path)
+
+SECRET_KEY = os.getenv('SECRET_KEY').encode('utf-8')
 
 
 # 1 takes two strings and generates a hex represenation of the hash.
@@ -28,6 +31,7 @@ def make_password(plaintext, service):
 def password(plaintext, service, length = 10, alphabet = ALPHABET):
     raw_hexdigest = make_password(plaintext, service)
 
+    print(raw_hexdigest)
     #convert hexdigest to decimal
     num = int(raw_hexdigest, 16)
 
@@ -48,6 +52,7 @@ def password(plaintext, service, length = 10, alphabet = ALPHABET):
 #print(hexdIG);
 
 EncryptedPass = password('p@ssw0rd'.encode('utf-8'), 'reddit'.encode('utf-8'))
+print("For secret Key t0ps3cr3t, service reddit, password = p@ssw0rd:")
 print(EncryptedPass)
 
 
@@ -55,10 +60,12 @@ window = Tk()
 window.title('Password Generator')
 window.geometry('400x250')
 
+'''
 SK_label = Label(text='Secret Key: ')
 SK_label.grid(column = 0, row = 0)
 skeyEntry =  Entry(window, width = 10)
 skeyEntry.grid(column = 1, row = 0)
+'''
 
 Serv_Label = Label(text='Web Service: ')
 Serv_Label.grid(column = 0, row=1)
